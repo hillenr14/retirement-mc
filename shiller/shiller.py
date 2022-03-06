@@ -6,7 +6,7 @@ Import Robert Shiller's P,E,CPI,Interest rate data.
 """
 
 import os
-import urllib2
+import urllib.request
 
 import pandas as pd
 import numpy as np
@@ -18,11 +18,10 @@ csv_file = os.path.join(mod_dir, 'shiller.csv')
 
 if not os.path.exists(csv_file):
     xls_url = 'http://www.econ.yale.edu/~shiller/data/chapt26.xlsx'
-    url = urllib2.urlopen(xls_url)
-
-    xls = pd.ExcelFile(url)
+    data = urllib.request.urlopen(xls_url).read()
+    xls = pd.ExcelFile(data)
     df = xls.parse('Data', skiprows=[0,1,3,4,5,6,7],
-                   skip_footer=5, index_col=0)
+                   skipfooter=7, index_col=0)
 
     df.to_csv(csv_file)
 

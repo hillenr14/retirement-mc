@@ -15,7 +15,7 @@ Many states have Black, Male Black, and Female Black.
 
 import os
 from glob import glob
-import urllib2
+import urllib.request
 
 import pandas as pd
 
@@ -118,11 +118,10 @@ if n_life_table_csv_files != 426:
     for state in two_letter_abbrev:
         s = state.lower().replace(' ', '_')
         state_url = cdc_url + 'lewk4_{}.xlsx'.format(s)
-        url = urllib2.urlopen(state_url)
-     
-        xls = pd.ExcelFile(url)
+        data = urllib.request.urlopen(state_url).read()
+        xls = pd.ExcelFile(data)
         sheets = xls.sheet_names
-        for sheet in xls.sheet_names:
+        for sheet in sheets:
             group = remove_digits(sheet)
             if group.startswith('sderr'): continue
 

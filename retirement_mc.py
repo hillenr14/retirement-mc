@@ -24,8 +24,8 @@ from itertools import cycle
 lines = ["-","--","-.",":"]
 linecycler = cycle(lines)
 
-from cdc_life_tables import life_table
-import shiller
+from cdc_life_tables.cdc_life_tables import life_table
+import shiller.shiller as shiller
 
 # Historical financial data
 inflation = shiller.inflation.iloc[1:-1]
@@ -146,8 +146,8 @@ def run_histories(starting_assets,
             final_assets.append(y[-1])
             final_ages.append(x[-1])
 
-        plt.plot(final_ages, final_assets, color='red', ls=':',
-                 marker='.', markersize=1.5)
+        plt.plot(final_ages, final_assets, color='red', linestyle='',
+                 marker='o', markersize=2)
 
         plt.xlabel('Age')
         plt.ylabel('Remaining assets (million USD)')
@@ -164,7 +164,7 @@ def run_histories(starting_assets,
         max_age = 110
         bins = np.linspace(int(starting_age)-0.5, max_age+0.5, max_age-starting_age+2)
 
-        plt.hist(final_ages, bins=bins, normed=True)
+        plt.hist(final_ages, bins=bins, density=True)
 
         plt.xlabel('Age of Death')
         plt.ylabel('Probability')
@@ -183,7 +183,7 @@ def run_histories(starting_assets,
                                   run_out_of_money_hist.std()/np.sqrt(n_mc))
 
     if verbose:
-        print ' Chance of running out of money is {:%}'.format(run_out_of_money)
+        print(' Chance of running out of money is {:%}'.format(run_out_of_money))
 
     return run_out_of_money
 
@@ -399,7 +399,7 @@ def sensitivity_plots(
     fig.tight_layout()
 
     if verbose:
-        print ' You should save ${:.2f} million.'.format(base_save)
+        print(' You should save ${:.2f} million.'.format(base_save))
 
     #fig.savefig('figs/{}.pdf'.format('sensitivity-plots'))
 

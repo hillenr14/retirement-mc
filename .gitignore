@@ -7,3 +7,4 @@ cdc_life_tables/data/*
 *.pyc
 figs
 figs/*
+.ipynb_checkpoints/*

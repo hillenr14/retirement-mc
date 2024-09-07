@@ -172,8 +172,11 @@ def life_table(state_abbrev, demographic_group):
     else:
         raise ValueError('{} not a demographic group for {}.'.format(
                               demographic_group, state_abbrev))
+    if 'qx' in df.columns:
+        return df['qx']
+    else:
+        return df['nqx']
 
-    return df['qx']
 
 
 

@@ -17,14 +17,9 @@ csv_file = os.path.join(mod_dir, 'shiller.csv')
 
 
 if not os.path.exists(csv_file):
-    xls_url = 'http://www.econ.yale.edu/~shiller/data/chapt26.xlsx'
-    data = urllib.request.urlopen(xls_url).read()
-    xls = pd.ExcelFile(data)
-    df = xls.parse('Data', skiprows=[0,1,3,4,5,6,7],
-                   skipfooter=7, index_col=0)
-
+    df = pd.read_excel("data/shiller.xlsx",
+            skiprows=[0,1,3,4,5,6,7], skipfooter=7, index_col=0)
     df.to_csv(csv_file)
-
 else:
     df = pd.read_csv(csv_file, index_col=0)
 
